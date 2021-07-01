@@ -59,14 +59,18 @@
   　const fetchQuizData = async (index) => {
   　　titleElement.textContent = '取得中';
   　　questionElement.textContent = '少々お待ち下さい';
-  
-  　　const response = await fetch(API_URL);
-  　　const quizData = await response.json();
-  　　const quizInstance = new Quiz(quizData);
-  
-  　　setNextQuiz(quizInstance, index);
-  　};
-  
+
+try{
+    　　const response = await fetch(API_URL);
+    　　const quizData = await response.json();
+    　　const quizInstance = new Quiz(quizData);
+    
+    　　setNextQuiz(quizInstance, index);
+    　} catch {
+        　　titleElement.textContent = '取得に失敗しました';
+        　　questionElement.textContent = 'やり直してください';
+    }};
+
   　const setNextQuiz = (quizInstance, index) => {
   　　while (answersContainer.firstChild) {
   　　　answersContainer.removeChild(answersContainer.firstChild);
@@ -132,4 +136,3 @@
   　　}
   　　return array;
   　};
-  
